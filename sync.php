@@ -81,7 +81,7 @@ function seenthis_sync_import_one($f) {
 		$m['date_modif'] = @filemtime($f);
 	}
 
-	// reponse ?
+	// response ?
 	if (isset($m['puuid'])
 	AND !$p = sql_fetsel('id_me', 'spip_me', 'uuid='.sql_quote($m['puuid']))) {
 		echo "Parent not yet known $m[puuid]\n";
