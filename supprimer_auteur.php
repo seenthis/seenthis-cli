@@ -103,8 +103,10 @@ function archiver($login) {
 		}
 	}
 
-	echo sprintf("suppression de l'auteur")."\n";
+	echo sprintf("suppression de l'auteur et de ses sessions")."\n";
 	sql_delete('spip_auteurs', 'id_auteur='.$auteur['id_auteur']);
+	include_spip('inc/session');
+	supprimer_sessions($auteur['id_auteur']);
 
 	echo "desindexation sphinx"."\n";
 	echo `echo "delete from seenthis where properties.login='$login';" | mysql -h 127.0.0.1 -P 9306`;
