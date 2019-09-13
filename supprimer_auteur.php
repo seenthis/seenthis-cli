@@ -12,6 +12,8 @@ $login = $argv[1];
 
 $password = $argv[2];
 
+$rapide = $argv[3];
+
 if (md5($password) !== 'b6eeb5a4973789c64be43f4485297532') die("Tu m'as pas donne le bon password\n");
 
 // exporter tout
@@ -20,10 +22,10 @@ include "cli/sync.php";
 echo " OK\n";
 
 // puis supprimer l'auteur
-archiver($login);
+archiver($login, $rapide);
 
 
-function archiver($login) {
+function archiver($login, $rapide = false) {
 	include_spip('base/abstract_sql');
 	$auteur = sql_fetsel('id_auteur', 'spip_auteurs', 'login='._q($login));
 
@@ -92,14 +94,16 @@ function archiver($login) {
 		}
 	}
 
-	// on repete qqs fois car il y a la profondeur d'url
-	// ne pas trop se casser la tete non plus, ca finira par finir…
-	echo "nettoyage des liens\n";
-	for ($i = 1; $i<3; $i++) 
-	if ($a = sql_allfetsel('a.id_syndic, a.url_site', 'spip_syndic a LEFT JOIN spip_syndic c ON c.id_parent = a.id_syndic LEFT JOIN spip_me_tags b ON a.url_site = b.tag', 'b.tag IS NULL AND c.id_syndic IS NULL')) {
-		foreach ($a as $m) {
-			echo "suppression url ", $m['url_site'], "\n";
-			sql_delete('spip_syndic', 'id_syndic='.$m['id_syndic']);
+	if (!$rapide) {
+		// on repete qqs fois car il y a la profondeur d'url
+		// ne pas trop se casser la tete non plus, ca finira par finir…
+		echo "nettoyage des liens\n";
+		for ($i = 1; $i<3; $i++) 
+		if ($a = sql_allfetsel('a.id_syndic, a.url_site', 'spip_syndic a LEFT JOIN spip_syndic c ON c.id_parent = a.id_syndic LEFT JOIN spip_me_tags b ON a.url_site = b.tag', 'b.tag IS NULL AND c.id_syndic IS NULL')) {
+			foreach ($a as $m) {
+				echo "suppression url ", $m['url_site'], "\n";
+				sql_delete('spip_syndic', 'id_syndic='.$m['id_syndic']);
+			}
 		}
 	}
 
