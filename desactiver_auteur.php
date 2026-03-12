@@ -8,10 +8,6 @@ if (isset($_SERVER['HTTP_HOST'])) die("commande cli");
 
 require_once('ecrire/inc_version.php');
 
-echo "export…";
-include "cli/sync.php";
-echo " OK\n";
-
 $login = $argv[1];
 
 $password = $argv[2];

@@ -16,11 +16,6 @@ $rapide = $argv[3];
 
 if (md5($password) !== 'b6eeb5a4973789c64be43f4485297532') die("Tu m'as pas donne le bon password\n");
 
-// exporter tout
-echo "export…";
-include "cli/sync.php";
-echo " OK\n";
-
 // puis supprimer l'auteur
 archiver($login, $rapide);
 
