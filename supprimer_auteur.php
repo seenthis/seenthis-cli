@@ -5,7 +5,7 @@ if (isset($_SERVER['HTTP_HOST'])) die("commande cli");
 
 #chdir('..');
 
-
+require_once('vendor/autoload.php');
 require_once('ecrire/inc_version.php');
 
 $login = $argv[1];
