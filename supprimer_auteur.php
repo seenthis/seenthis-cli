@@ -108,7 +108,7 @@ function archiver($login, $rapide = false) {
 	supprimer_sessions($auteur['id_auteur']);
 
 	echo "desindexation sphinx"."\n";
-	echo `echo "delete from seenthis where properties.login='$login';" | mysql -h 127.0.0.1 -P 9306`;
+	echo `echo "delete from seenthis where properties.login='$login';" | mariadb -h 127.0.0.1 -P 9306`;
 
 }
 
